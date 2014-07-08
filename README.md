@@ -6,7 +6,6 @@ __This project is currently looking for contributors with experience in the rele
 
 #### About LibChan
 
-
 It's most unique characteristic is that it replicates the semantics of go channels across network connections, while allowing for nested channels to be transferred in messages. This would allow you to send a file attached to an HTTP response, and being able to open the file on the remote end for reading or writing.  
 
 The protocol uses SPDY as it's default transport with MSGPACK as it's default serialization format. Both are able to be switched out, with http1+websockets and protobuf fallbacks planned.  
@@ -29,18 +28,18 @@ While the RequestResponse pattern is primarily catered for, Asynchronous Message
 [Adrian Rossouw](http://github.com/Vertice)
 
 * CTO of [Wayfinder](http://wayfinder.co)
-* Co-Founder of [Graft](http://graft.io)
-* Founder of [Aegir](http://communityproject.org)
+* Co-Founder of [Graft](http://graft.io) project.
+* Founder of [Aegir](http://communityproject.org) project.
 * [Former Drupal Core Developer](https://drupal.org/node/956624)
 
 [Peter Elgers](https://github.com/pelger)
 
-* VP of Engineering at [Nearform](http://nearform.com)
-* Co-Founder of [Graft](http://graft.io)
+* VP of Engineering at [Nearform](http://nearform.com).
+* Co-Founder of [Graft](http://graft.io) project.
 
 [Matteo Collina](https://github.com/mcollina)
 
 * Contributor to [Graft](http://graft.io)
-* Founder of [mosca](https://github.com/mcollina/mosca)
-* Founder of [levelgraph](https://github.com/mcollina/levelgraph)
-* Founder of [Ponte](https://github.com/eclipse/ponte)
+* Founder of [Mosca](https://github.com/mcollina/mosca) project.
+* Founder of [Levelgraph](https://github.com/mcollina/levelgraph) project.
+* Founder of [Ponte](https://github.com/eclipse/ponte) project.
