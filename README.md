@@ -28,19 +28,19 @@ While the RequestResponse pattern is primarily catered for, Asynchronous Message
 
 [Adrian Rossouw](http://github.com/Vertice)
 
-    * CTO of [Wayfinder](http://wayfinder.co)
-    * Co-Founder of [Graft](http://graft.io)
-    * Founder of [Aegir](http://communityproject.org)
-    * [Former Drupal Core Developer](https://drupal.org/node/956624)
-    
+* CTO of [Wayfinder](http://wayfinder.co)
+* Co-Founder of [Graft](http://graft.io)
+* Founder of [Aegir](http://communityproject.org)
+* [Former Drupal Core Developer](https://drupal.org/node/956624)
+
 [Peter Elgers](https://github.com/pelger)
 
-    * VP of Engineering at [Nearform](http://nearform.com)
-    * Co-Founder of [Graft](http://graft.io)
-    
+* VP of Engineering at [Nearform](http://nearform.com)
+* Co-Founder of [Graft](http://graft.io)
+
 [Matteo Collina](https://github.com/mcollina)
 
-    * Contributor to [Graft](http://graft.io)
-    * Founder of [mosca](https://github.com/mcollina/mosca)
-    * Founder of [levelgraph](https://github.com/mcollina/levelgraph)
-    * Founder of [Ponte](https://github.com/eclipse/ponte)
+* Contributor to [Graft](http://graft.io)
+* Founder of [mosca](https://github.com/mcollina/mosca)
+* Founder of [levelgraph](https://github.com/mcollina/levelgraph)
+* Founder of [Ponte](https://github.com/eclipse/ponte)
