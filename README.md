@@ -1,4 +1,7 @@
-### Graft
+# Graft
+
+> "instead of pretending everything is a local function even over the network (which turned out to be a bad idea), what if we did it the other way around? Pretend your components are communicating over a network even when they aren't."  
+> [Solomon Hykes](http://github.com/shykes) (of Docker fame) on LibChan - [[link]](https://news.ycombinator.com/item?id=7874317)
 
 The Graft project formed to harness the opportunities that the explosion of
 information about microservice architectures have opened our eyes to.
@@ -8,10 +11,8 @@ One that is hopefully more adaptable, resilient and interesting.
 
 Our name is also our purpose.
 
-### > [Explore our concepts and influences](http://wayfinder.co/pathways/5365c71219e552110093ba31/graft-full-stack-node-js-through-microservices)
+### [Explore our concepts and influences](http://wayfinder.co/pathways/5365c71219e552110093ba31/graft-full-stack-node-js-through-microservices)
 
-> "instead of pretending everything is a local function even over the network (which turned out to be a bad idea), what if we did it the other way around? Pretend your components are communicating over a network even when they aren't."  
-> [Solomon Hykes](http://github.com/shykes) (of Docker fame) on LibChan - [[link]](https://news.ycombinator.com/item?id=7874317)
 
 #### Our Process
 
