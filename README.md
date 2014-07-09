@@ -1,7 +1,8 @@
 # Graft
 
-> "instead of pretending everything is a local function even over the network (which turned out to be a bad idea), what if we did it the other way around? Pretend your components are communicating over a network even when they aren't."  
-> [Solomon Hykes](http://github.com/shykes) (of Docker fame) on LibChan - [[link]](https://news.ycombinator.com/item?id=7874317)
+> "Instead of pretending everything is a local function even over the network ..., what if we did it the other way around?  
+> Pretend your components are communicating over a network even when they aren't?"  
+>   -- [Solomon Hykes](http://github.com/shykes) (of Docker fame) on [LibChan](http://github.com/docker/libchan) - [[link]](https://news.ycombinator.com/item?id=7874317)
 
 The Graft project formed to harness the opportunities that the explosion of
 information about microservice architectures have opened our eyes to.
@@ -16,19 +17,18 @@ Our name is also our purpose.
 
 #### Our Process
 
-We discover how to connect tools through microservices.
-We explore the tools that are already available.
-We help adapt the tools that would be able to be integrated.
-We innovate to build those tools that don't exist yet.
+* discover how to connect tools through microservices.
+* explore the tools that are already available.
+* adapt those that could be integrated.
+* innovate to build those that don't exist yet.
 
 #### Our Principles
 
-We favor small tools that serve only one purpose, but do so well.
-We eschew state, because it only leads to trouble.
-We focus on javascript, because it is universal.
-We evaluate and document, not prescribe.
-We educate.
-
+* favor small tools that serve only one purpose, but do so well.
+* eschew state, because it only leads to trouble.
+* focus on javascript, because it is universal.
+* evaluate and document, not prescribe.
+* educate.
 
 #### Our Goals
 
