@@ -3,7 +3,7 @@
 The Graft project formed to harness the opportunities that the explosion of
 information about microservice architectures have opened our eyes to.
 
-To Graft is the process of joining together parts to create a new whole.
+To process of grafting involves joining together parts to create a new whole.
 One that is hopefully more adaptable, resilient and interesting.
 
 Our name is also our purpose.
