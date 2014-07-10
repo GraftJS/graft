@@ -7,7 +7,7 @@
 The Graft project formed to harness the opportunities that the explosion of
 information about microservice architectures have opened our eyes to.
 
-Grafting involves joining together parts to create a new whole.
+Grafting involves joining together parts to create a new whole.  
 One that is hopefully more adaptable, resilient and interesting.
 
 ### [Explore our concepts and influences](http://wayfinder.co/pathways/5365c71219e552110093ba31/graft-full-stack-node-js-through-microservices)
