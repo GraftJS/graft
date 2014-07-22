@@ -63,6 +63,7 @@ While the RequestResponse pattern is the primary focus, Asynchronous Message Pas
 * CTO of [Wayfinder](http://wayfinder.co)
 * Co-Founder of [Graft](http://graft.io) project.
 * Founder of [Aegir](http://communityproject.org) project.
+* Founder of [Waif](http://github.com/wayfin/waif) project.
 * [Former Drupal Core Developer](https://drupal.org/node/956624)
 
 [Peter Elgers](https://github.com/pelger)
@@ -72,7 +73,7 @@ While the RequestResponse pattern is the primary focus, Asynchronous Message Pas
 
 [Matteo Collina](https://github.com/mcollina)
 
-* Contributor to [Graft](http://graft.io)
+* Co-Founder of [Graft](http://graft.io)
 * Founder of [Mosca](https://github.com/mcollina/mosca) project.
 * Founder of [Levelgraph](https://github.com/mcollina/levelgraph) project.
 * Founder of [Ponte](https://github.com/eclipse/ponte) project.
