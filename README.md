@@ -4,8 +4,8 @@
 > Pretend your components are communicating over a network even when they aren't?"  
 >   -- [Solomon Hykes](http://github.com/shykes) (of Docker fame) on [LibChan](http://github.com/docker/libchan) - [[link]](https://news.ycombinator.com/item?id=7874317)
 
-The Graft project formed to harness the opportunities that the explosion of
-information about microservice architectures have opened our eyes to.
+The [Graft project](http://graft.io) formed to explore the future of the web as seen through
+the lens of microservice architectures.
 
 Grafting involves joining together parts to create a new whole.  
 One that is hopefully more adaptable, resilient and interesting.
