@@ -2,7 +2,8 @@
 
 The [Graft project](http://graft.io) explores what the web could become, if we extended microservice architectures into the client.  
 
-When you graft something, it involves joining together parts to create a new whole. One that is hopefully more adaptable, resilient and ultimately interesting.
+When you graft something, it involves joining together parts to create a new whole.  
+One that is hopefully more adaptable, resilient and ultimately interesting.
 
 > "Instead of pretending everything is a local function even over the network ..., what if we did it the other way around?  
 > Pretend your components are communicating over a network even when they aren't?"  
