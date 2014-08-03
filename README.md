@@ -1,4 +1,4 @@
-# Graft
+![Graft](https://rawgit.com/GraftJS/graft.io/master/static/images/graft_logo.svg)
 
 The [Graft project](http://graft.io) explores what the web could become, if we extended microservice architectures into the client.  
 
