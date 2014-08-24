@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/GraftJS/graft/issues"
   },
-  "homepage": "https://github.com/GraftJS/graft"
+  "homepage": "https://github.com/GraftJS/graft",
+  "dependencies": {
+    "jschan": "0.0.4"
+  }
 }
