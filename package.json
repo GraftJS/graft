@@ -1,0 +1,28 @@
+{
+  "name": "graft",
+  "version": "0.0.1",
+  "description": "Full-Stack JavaScript Through Microservices",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GraftJS/graft.git"
+  },
+  "keywords": [
+    "graft",
+    "microservices",
+    "jschan",
+    "libchan"
+  ],
+  "author": "Adrian Rossouw <adrian@daemon.co.za>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GraftJS/graft/issues"
+  },
+  "homepage": "https://github.com/GraftJS/graft"
+}
