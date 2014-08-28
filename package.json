@@ -7,7 +7,7 @@
     "example": "example"
   },
   "scripts": {
-    "test": "mocha -R spec"
+    "test": "mocha -R spec 2>&1"
   },
   "repository": {
     "type": "git",
@@ -27,5 +27,9 @@
   "homepage": "https://github.com/GraftJS/graft",
   "dependencies": {
     "jschan": "0.0.4"
+  },
+  "devDependencies": {
+    "mocha": "^1.21.4",
+    "must": "^0.12.0"
   }
 }
