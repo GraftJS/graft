@@ -2,7 +2,7 @@
   "name": "graft",
   "version": "0.0.1",
   "description": "Full-Stack JavaScript Through Microservices",
-  "main": "index.js",
+  "main": "graft.js",
   "directories": {
     "example": "example"
   },
@@ -26,10 +26,13 @@
   },
   "homepage": "https://github.com/GraftJS/graft",
   "dependencies": {
-    "jschan": "0.0.4"
+    "inherits": "^2.0.1",
+    "jschan": "0.0.4",
+    "readable-stream": "^1.0.31"
   },
   "devDependencies": {
     "mocha": "^1.21.4",
-    "must": "^0.12.0"
+    "must": "^0.12.0",
+    "through2": "^0.6.1"
   }
 }
