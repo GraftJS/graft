@@ -12,6 +12,18 @@ module.exports = function allTransportTests(createServer, createClient) {
     client = createClient(instance);
   });
 
+  afterEach(function closeServer(done) {
+    instance.close(function() {
+      done();
+    })
+  })
+
+  afterEach(function closeClient(done) {
+    client.close(function() {
+      done();
+    });
+  })
+
   it('should receive a message', function(done) {
     instance.pipe(through.obj(function(req, enc, cb) {
       expect(req.msg).to.eql({ hello: 'world' });

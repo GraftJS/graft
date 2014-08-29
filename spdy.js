@@ -20,6 +20,7 @@ function Server(opts) {
   this.address = this._server.address.bind(this._server);
 
   this._server.on('listening', this.emit.bind(this, 'ready', this));
+  this._server.on('error', this.emit.bind(this, 'error'));
 
   var that = this;
 
@@ -42,6 +43,18 @@ inherits(Server, Readable);
 
 Server.prototype._read = function() { return null };
 
+Server.prototype.end = function() {
+  var that = this;
+  this._server.close(function(err) {
+    if (err) {
+      return this.emit('error', err);
+    }
+
+    that.push(null);
+  });
+  return this;
+};
+
 module.exports.server = Server;
 
 function Client(opts) {
@@ -52,6 +65,13 @@ function Client(opts) {
   Writable.call(this, { objectMode: true, highWaterMark: 16 });
 
   this.session = jschan.spdyClientSession(opts);
+
+  this.session.on('error', this.emit.bind(this, 'error'));
+
+  this.session.on('close', function() {
+    this.removeAllListeners('error');
+    this.on('error', function() {});
+  });
 }
 
 inherits(Client, Writable);
@@ -59,6 +79,6 @@ inherits(Client, Writable);
 Client.prototype._write = function(req, enc, done) {
   // really, nothing to do, it's just a placeholder
   done();
-}
+};
 
 module.exports.client = Client;

@@ -25,6 +25,10 @@ function Graft() {
 
   this.on('pipe', function(source) {
     source.on('ready', that.emit.bind(that, 'ready'));
+
+    this.on('end', function() {
+      source.end();
+    });
   });
 }
 
@@ -63,6 +67,31 @@ Graft.prototype.pipe = function(origin, end) {
   }
 
   return Transform.prototype.pipe.call(this, origin, end);
+};
+
+Graft.prototype.close = function(cb) {
+  var count = 0;
+
+  function complete() {
+    this._session.close(function(err) {
+      if (err) {
+        return cb(err);
+      }
+      return cb();
+    });
+  }
+
+  if (this._readableState.endEmitted) {
+    complete.call(this);
+  } else {
+    this.on('end', complete);
+  }
+
+  if (!this._readableState.flowing) {
+    this.resume();
+  }
+
+  this.end();
 }
 
 Graft.prototype.createReadChannel   = channels.GenericReadChannel;
