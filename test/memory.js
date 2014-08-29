@@ -2,7 +2,7 @@
 var allTransportTests = require('./all_transports');
 var graft             = require('../graft');
 
-describe('memory graft', function() {
+describe('in-memory graft', function() {
 
   allTransportTests(function createServer() {
     return graft();
