@@ -7,9 +7,9 @@ var channels  = require('./lib/channels');
 
 function Graft() {
   if (!(this instanceof Graft)) {
-    return new Graft()
+    return new Graft();
   }
-  Transform.call(this, { objectMode: true })
+  Transform.call(this, { objectMode: true });
 
   var that = this;
 
@@ -20,7 +20,7 @@ function Graft() {
 
   this._session = jschan.memorySession();
   this._session.on('channel', function(channel) {
-    channel.on('readable', readFirst)
+    channel.on('readable', readFirst);
   });
 
   this.on('pipe', function(source) {
@@ -92,7 +92,7 @@ Graft.prototype.close = function(cb) {
   }
 
   this.end();
-}
+};
 
 Graft.prototype.createReadChannel   = channels.GenericReadChannel;
 Graft.prototype.createWriteChannel  = channels.GenericWriteChannel;

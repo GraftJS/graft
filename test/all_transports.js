@@ -1,3 +1,4 @@
+/* global describe, it, before, beforeEach, after, afterEach */
 
 var expect  = require('must');
 var graft   = require('../graft');
@@ -15,14 +16,14 @@ module.exports = function allTransportTests(createServer, createClient) {
   afterEach(function closeServer(done) {
     instance.close(function() {
       done();
-    })
-  })
+    });
+  });
 
   afterEach(function closeClient(done) {
     client.close(function() {
       done();
     });
-  })
+  });
 
   it('should receive a message', function(done) {
     instance.pipe(through.obj(function(req, enc, cb) {
@@ -33,7 +34,7 @@ module.exports = function allTransportTests(createServer, createClient) {
       done();
     }));
 
-    client.write({ hello: 'world' })
+    client.write({ hello: 'world' });
   });
 
   it('should pass the same session', function(done) {
@@ -49,8 +50,8 @@ module.exports = function allTransportTests(createServer, createClient) {
       cb();
     }));
 
-    client.write({ hello: 'world' })
-    client.write({ hello: 'world' })
+    client.write({ hello: 'world' });
+    client.write({ hello: 'world' });
   });
 
   it('should support a return channel', function(done) {
@@ -71,7 +72,7 @@ module.exports = function allTransportTests(createServer, createClient) {
       expect(msg).to.eql({ hello: 'world' });
       cb();
       done();
-    }))
+    }));
   });
 
   it('should support a second write channel', function(done) {
@@ -92,11 +93,11 @@ module.exports = function allTransportTests(createServer, createClient) {
       moreChannel: moreChannel
     });
 
-    moreChannel.write({ 'more': 'message' })
+    moreChannel.write({ 'more': 'message' });
   });
 
   it('should be pipeable in another graft instance', function(done) {
-    var instance2 = graft()
+    var instance2 = graft();
     var session;
     var channel;
 
@@ -119,6 +120,6 @@ module.exports = function allTransportTests(createServer, createClient) {
       .pipe(instance2);
 
 
-    client.write({ hello: 'world' })
+    client.write({ hello: 'world' });
   });
 };
