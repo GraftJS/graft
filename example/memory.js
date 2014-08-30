@@ -1,27 +1,27 @@
 'use strict';
 
-var graft = require('graft');
+var graft   = require('..')();
 var assert  = require('assert');
+var through = require('through2');
+var called  = false;
 
-var called = false;
+graft.pipe(through.obj(function(req, enc, cb) {
+  if (req.msg.topic === 'foo') {
+    graft.write({ topic: 'bar' });
+  }
+  cb();
+}));
 
-graft()
-  .pipe(function(msg) {
-    if (msg.topic === 'foo') {
-      msg.write({ topic: 'bar' });
-    }
-  })
-  .pipe(function(msg) {
-    if (msg.topic === 'bar') {
-      called = true;
-      assert('response', msg);
-    }
-  });
+graft.pipe(through.obj(function(req, enc, cb) {
+  if (req.msg.topic === 'bar') {
+    called = true;
+    assert('response', req.msg);
+  }
+  cb();
+}));
 
 setTimeout(function() {
   assert(called, 'no response');
 }, 200);
 
-graft.start();
-
-graft.write({ hello: 'foo' });
+graft.write({ topic: 'foo' });
