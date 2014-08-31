@@ -1,4 +1,4 @@
-** Warning: This library is under active development, and should not be considered production ready **
+__Warning: This library is under active development, and should not be considered production ready__
 
 ![Graft](https://rawgit.com/GraftJS/graft.io/master/static/images/graft_logo.svg)
 
