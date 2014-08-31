@@ -10,27 +10,24 @@ if (!process.argv[2]) {
 }
 
 // by default graft always has in-memory transport
-var graft = require('graft');
+var graft = require('../../');
 
 // enable the optional spdy-client
-var spdy = require('graft/spdy');
+var spdy = require('../../spdy');
 var client = spdy.client({port: 9323});
 
 // all messages cross over spdy now
-graft.pipe(client).pipe(graft);
-
-// start listening / emitting messages.
-graft.start();
+graft.pipe(client);
 
 // define a set of streams and channels
 function clientCmd() {
   return {
     Args: process.argv.slice(3),
     Cmd: process.argv[2],
-    StatusChan: graft.readChannel(),
-    Stderr: graft.byteStream(),
-    Stdout: graft.byteStream(),
-    Stdin:  graft.byteStream()
+    StatusChan: graft.createReadChannel(),
+    Stderr: process.stderr,
+    Stdout: process.strdout,
+    Stdin:  process.stdin
   };
 }
 
@@ -39,15 +36,9 @@ var request = graft.write(clientCmd());
 
 // immediately returns the sent message
 request.pipe(function(msg) {
-
-  // set up std* to those pipes
-  process.stdin.pipe(msg.Stdin);
-  msg.Stdout.pipe(process.stdout);
-  msg.Stderr.pipe(process.stderr);
-
-  // split off into a 'sub-graft'
-  graft(msg.StatusChan)
-    .pipe(statusCheck);
+  // TODO: not sure about what happens here right now
+  //
+  // graft(msg.StatusChan).pipe(statusCheck);
 });
 
 // When we get a status, end the whole app

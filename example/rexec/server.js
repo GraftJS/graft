@@ -1,26 +1,25 @@
 'use strict';
 
 var spawn = require('child_process').spawn;
+var through2 = require('through2');
 
-// by default graft always has in-memory transport
-var graft = require('graft');
+var graft = require('../..')();
 
 // enable the optional spdy-server
-var spdy = require('graft/spdy');
-var server = spdy.server(9323);
+var spdy = require('../../spdy');
+var server = spdy.server({ port: 9323 });
 
 // all messages cross over spdy now
-graft.pipe(server).pipe(graft);
+server.pipe(graft);
 
 // handle received messages
-graft.pipe(handleMsg);
-
-// start listening / emitting
-graft.start();
+graft.pipe(through2.obj(handleMsg));
 
 // run a local process and pipe stdio across spdy
-function handleMsg(msg) {
+function handleMsg(req, enc, callback) {
   var opts = { stdio: [ 'pipe', 'pipe', 'pipe' ] };
+
+  var msg = req.msg;
 
   var child = spawn(msg.Cmd, msg.Args, opts);
 
@@ -31,4 +30,6 @@ function handleMsg(msg) {
   child.on('exit', function(status) {
     msg.StatusChan.write({ Status: status });
   });
+
+  callback();
 }
