@@ -28,7 +28,7 @@ function handleMsg(req, enc, callback) {
   child.stderr.pipe(msg.Stderr);
 
   child.on('exit', function(status) {
-    msg.StatusChan.write({ Status: status });
+    msg.StatusChan.end({ Status: status });
   });
 
   callback();

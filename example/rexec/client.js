@@ -3,6 +3,7 @@
 'use strict';
 
 var usage = process.argv[0] + ' ' + process.argv[1] + ' command <args..>';
+var through2 = require('through2');
 
 if (!process.argv[2]) {
   console.log(usage);
@@ -10,42 +11,30 @@ if (!process.argv[2]) {
 }
 
 // by default graft always has in-memory transport
-var graft = require('../../');
+var graft = require('../../')();
 
 // enable the optional spdy-client
-var spdy = require('../../spdy');
-var client = spdy.client({port: 9323});
+graft.pipe(require('../../spdy').client({ port: 9323 }));
 
-// all messages cross over spdy now
-graft.pipe(client);
+// create a return channel
+var ret = graft.createReadChannel();
 
-// define a set of streams and channels
-function clientCmd() {
-  return {
-    Args: process.argv.slice(3),
-    Cmd: process.argv[2],
-    StatusChan: graft.createReadChannel(),
-    Stderr: process.stderr,
-    Stdout: process.strdout,
-    Stdin:  process.stdin
-  };
-}
-
-// send those nested streams as a message
-var request = graft.write(clientCmd());
-
-// immediately returns the sent message
-request.pipe(function(msg) {
-  // TODO: not sure about what happens here right now
-  //
-  // graft(msg.StatusChan).pipe(statusCheck);
+// send the comamnd through Graft
+graft.write({
+  Args: process.argv.slice(3),
+  Cmd: process.argv[2],
+  StatusChan: ret,
+  Stderr: process.stderr,
+  Stdout: process.stdout,
+  Stdin:  process.stdin
 });
 
 // When we get a status, end the whole app
-function statusCheck(chan) {
+ret.pipe(through2.obj(function (msg, enc, cb) {
   graft.end();
   setImmediate(function() {
-    console.log('ended with status', chan.Status);
-    process.exit(chan.Status);
+    cb();
+    console.log('ended with status', msg.Status);
+    process.exit(msg.Status);
   });
-}
+}));

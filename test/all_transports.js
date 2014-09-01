@@ -1,8 +1,9 @@
 /* global describe, it, before, beforeEach, after, afterEach */
 
-var expect  = require('must');
-var graft   = require('../graft');
-var through = require('through2');
+var expect    = require('must');
+var graft     = require('../graft');
+var through   = require('through2');
+var Readable  = require('readable-stream').Readable;
 
 module.exports = function allTransportTests(createServer, createClient) {
   var instance;
@@ -121,5 +122,25 @@ module.exports = function allTransportTests(createServer, createClient) {
 
 
     client.write({ hello: 'world' });
+  });
+
+  it('should support sending a Readable to the other side', function(done) {
+    var readable = new Readable();
+
+    readable._read = function() {
+      this.push("hello world");
+      this.push(null);
+    };
+
+    client.write({ readable: readable });
+
+    instance.pipe(through.obj(function(req, enc, cb) {
+      req.msg.readable.pipe(through(function(chunk, enc, cb) {
+        expect(chunk.toString()).to.eql("hello world");
+        done();
+        cb();
+      }));
+      cb();
+    }));
   });
 };
