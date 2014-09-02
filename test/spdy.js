@@ -1,3 +1,4 @@
+/* global describe, it, before, beforeEach, after, afterEach */
 
 var allTransportTests = require('./all_transports');
 var graft             = require('../graft');
@@ -16,7 +17,7 @@ describe('spdy graft', function() {
     var result = graft();
     server.on('ready', function(server) {
       result.pipe(spdy.client({ port: server.address().port }));
-    })
+    });
     return result;
-  })
+  });
 });

@@ -44,7 +44,7 @@ function flowing(obj, enc, done) {
     // it quacks like a duck, so it's a duck - s/duck/request/g
     this.push(obj);
   } else {
-    var channel = this._session.createWriteChannel();
+    var channel = this._session.WriteChannel();
     channel.write(channels.replace(obj, channel));
   }
 
@@ -94,10 +94,10 @@ Graft.prototype.close = function(cb) {
   this.end();
 };
 
-Graft.prototype.createReadChannel   = channels.GenericReadChannel;
-Graft.prototype.createWriteChannel  = channels.GenericWriteChannel;
+Graft.prototype.ReadChannel   = channels.GenericReadChannel;
+Graft.prototype.WriteChannel  = channels.GenericWriteChannel;
 
-Graft.createReadChannel             = channels.GenericReadChannel;
-Graft.createWriteChannel            = channels.GenericWriteChannel;
+Graft.ReadChannel             = channels.GenericReadChannel;
+Graft.WriteChannel            = channels.GenericWriteChannel;
 
 module.exports = Graft;

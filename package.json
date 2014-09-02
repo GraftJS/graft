@@ -27,7 +27,7 @@
   "homepage": "https://github.com/GraftJS/graft",
   "dependencies": {
     "inherits": "^2.0.1",
-    "jschan": "0.0.6",
+    "jschan": "0.1.0",
     "readable-stream": "^1.0.31"
   },
   "devDependencies": {

@@ -36,12 +36,12 @@ function Server(opts) {
 
   this._server.on('session', function(session) {
     session.on('channel', handleChannel);
-  })
+  });
 }
 
 inherits(Server, Readable);
 
-Server.prototype._read = function() { return null };
+Server.prototype._read = function() { return null; };
 
 Server.prototype.end = function() {
   var that = this;
