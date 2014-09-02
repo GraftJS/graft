@@ -56,7 +56,7 @@ module.exports = function allTransportTests(createServer, createClient) {
   });
 
   it('should support a return channel', function(done) {
-    var returnChannel = client.createReadChannel();
+    var returnChannel = client.ReadChannel();
 
     instance.pipe(through.obj(function(req, enc, cb) {
       var chan = req.msg.returnChannel;
@@ -77,7 +77,7 @@ module.exports = function allTransportTests(createServer, createClient) {
   });
 
   it('should support a second write channel', function(done) {
-    var moreChannel = client.createWriteChannel();
+    var moreChannel = client.WriteChannel();
 
     instance.pipe(through.obj(function(req, enc, cb) {
       var chan = req.msg.moreChannel;
