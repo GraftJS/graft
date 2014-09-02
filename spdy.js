@@ -77,8 +77,11 @@ function Client(opts) {
 inherits(Client, Writable);
 
 Client.prototype._write = function(req, enc, done) {
-  // really, nothing to do, it's just a placeholder
-  done();
+  var channel = this.session.WriteChannel();
+  channel.write(req.msg, function() {
+    req.channel.pipe(channel);
+    done();
+  });
 };
 
 module.exports.client = Client;

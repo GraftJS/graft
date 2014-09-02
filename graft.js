@@ -3,7 +3,6 @@ var Transform = require('readable-stream').Transform;
 var inherits  = require('inherits');
 var Request   = require('./lib/request');
 var jschan    = require('jschan');
-var channels  = require('./lib/channels');
 
 function Graft() {
   if (!(this instanceof Graft)) {
@@ -23,6 +22,8 @@ function Graft() {
     channel.on('readable', readFirst);
   });
 
+  this._nextChannel = this._session.WriteChannel();
+
   this.on('pipe', function(source) {
     source.on('ready', that.emit.bind(that, 'ready'));
 
@@ -34,40 +35,18 @@ function Graft() {
 
 inherits(Graft, Transform);
 
-function waiting(obj, enc, done) {
-  this._waitingObj = obj;
-  this._waitingDone = done;
-}
-
-function flowing(obj, enc, done) {
+Graft.prototype._transform = function flowing(obj, enc, done) {
   if (obj.session && obj.channel && obj.msg) {
     // it quacks like a duck, so it's a duck - s/duck/request/g
     this.push(obj);
   } else {
-    var channel = this._session.createWriteChannel();
-    channel.write(channels.replace(obj, channel));
+    var channel = this._nextChannel;
+    this._nextChannel = this._session.WriteChannel();
+    channel.write(obj);
   }
 
   done();
 }
-
-Graft.prototype._transform = waiting;
-
-Graft.prototype.pipe = function(origin, end) {
-  if (origin.session) {
-    this._session = origin.session;
-  }
-
-  this._transform = flowing;
-
-  if (this._waitingObj) {
-    this._transform(this._waitingObj, 'object', this._waitingDone);
-    delete this._waitingObj;
-    delete this._waitingDone;
-  }
-
-  return Transform.prototype.pipe.call(this, origin, end);
-};
 
 Graft.prototype.close = function(cb) {
   var count = 0;
@@ -94,10 +73,12 @@ Graft.prototype.close = function(cb) {
   this.end();
 };
 
-Graft.prototype.createReadChannel   = channels.GenericReadChannel;
-Graft.prototype.createWriteChannel  = channels.GenericWriteChannel;
+Graft.prototype.ReadChannel   = function() {
+  return this._nextChannel.ReadChannel();
+};
 
-Graft.createReadChannel             = channels.GenericReadChannel;
-Graft.createWriteChannel            = channels.GenericWriteChannel;
+Graft.prototype.WriteChannel   = function() {
+  return this._nextChannel.WriteChannel();
+};
 
 module.exports = Graft;
