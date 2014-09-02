@@ -16,7 +16,10 @@ inherits(WSServer, Server);
 
 WSServer.prototype._buildServer = function(opts) {
   var server = jschan.websocketServer(opts.server);
-  server.listen(opts.port || 0);
+
+  if (!opts.server) {
+    server.listen(opts.port || 0);
+  }
 
   this.address = server.address.bind(server);
 
