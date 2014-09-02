@@ -1,6 +1,6 @@
 {
   "name": "graft",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Full-Stack JavaScript Through Microservices",
   "main": "graft.js",
   "directories": {
