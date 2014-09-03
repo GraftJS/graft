@@ -1,17 +1,17 @@
-/* global describe, it, before, beforeEach, after, afterEach */
+'use strict';
 
 var expect    = require('must');
 var graft     = require('../graft');
 var through   = require('through2');
 var Readable  = require('readable-stream').Readable;
 
-module.exports = function allTransportTests(Server, Client) {
+module.exports = function allTransportTests(buildServer, buildClient) {
   var instance;
   var client;
 
   beforeEach(function() {
-    instance = Server();
-    client = Client(instance);
+    instance = buildServer();
+    client = buildClient(instance);
   });
 
   afterEach(function closeServer(done) {
@@ -128,7 +128,7 @@ module.exports = function allTransportTests(Server, Client) {
     var readable = new Readable();
 
     readable._read = function() {
-      this.push("hello world");
+      this.push('hello world');
       this.push(null);
     };
 
@@ -136,7 +136,7 @@ module.exports = function allTransportTests(Server, Client) {
 
     instance.pipe(through.obj(function(req, enc, cb) {
       req.msg.readable.pipe(through(function(chunk, enc, cb) {
-        expect(chunk.toString()).to.eql("hello world");
+        expect(chunk.toString()).to.eql('hello world');
         done();
         cb();
       }));

@@ -1,4 +1,6 @@
 
+'use strict';
+
 var graft = require('../../graft')();
 var ws    = require('../../ws');
 var ret   = graft.ReadChannel();

@@ -6,7 +6,7 @@ var ws      = require('../../ws');
 var spdy    = require('../../spdy');
 var http    = require('http');
 var server  = http.createServer();
-var adder   = require('./adder');
+//var adder   = require('./adder');
 var send    = require('send');
 var url     = require('url');
 
@@ -17,7 +17,7 @@ ws
   .pipe(spdy.client({ port: 3003 })); // calling it remotely
 
 server.on('request', function(req, res){
-  console.log(req.method, req.url)
+  console.log(req.method, req.url);
 
   function error(err) {
     res.statusCode = err.status || 500;

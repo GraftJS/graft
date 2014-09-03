@@ -1,4 +1,6 @@
 
+'use strict';
+
 var allTransportTests = require('./all_transports');
 var graft             = require('../graft');
 var spdy              = require('../spdy');
@@ -16,7 +18,7 @@ describe('spdy graft', function() {
     var result = graft();
     server.on('ready', function(server) {
       result.pipe(spdy.client({ port: server.address().port }));
-    })
+    });
     return result;
-  })
+  });
 });

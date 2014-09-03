@@ -1,8 +1,9 @@
 
+'use strict';
+
 var allTransportTests = require('./all_transports');
 var graft             = require('../graft');
 var ws                = require('../ws');
-var fs                = require('fs');
 
 describe('websocket graft', function() {
 
@@ -12,7 +13,7 @@ describe('websocket graft', function() {
     var result = graft();
     server.on('ready', function(server) {
       result.pipe(ws.client({ port: server.address().port }));
-    })
+    });
     return result;
-  })
+  });
 });

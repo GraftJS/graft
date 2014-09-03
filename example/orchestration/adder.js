@@ -1,4 +1,6 @@
 
+'use strict';
+
 var graft = require('../../graft');
 var through = require('through2');
 var port = process.argv[2] || 3003;

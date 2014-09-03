@@ -1,4 +1,6 @@
 
+'use strict';
+
 var Transform = require('readable-stream').Transform;
 var inherits  = require('inherits');
 var Request   = require('./lib/request');
@@ -13,6 +15,7 @@ function Graft() {
   var that = this;
 
   function readFirst() {
+    /*jshint validthis:true */
     this.removeListener('readable', readFirst);
     that.push(new Request(that._session, this, this.read()));
   }
@@ -46,12 +49,12 @@ Graft.prototype._transform = function flowing(obj, enc, done) {
   }
 
   done();
-}
+};
 
 Graft.prototype.close = function(cb) {
-  var count = 0;
 
   function complete() {
+    /*jshint validthis:true */
     this._session.close(function(err) {
       if (err) {
         return cb(err);

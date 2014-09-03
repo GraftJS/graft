@@ -1,4 +1,6 @@
 
+'use strict';
+
 var jschan    = require('jschan');
 var inherits  = require('inherits');
 var Server    = require('./lib/server');

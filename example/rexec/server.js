@@ -12,9 +12,6 @@ var server = spdy.server({ port: 9323 });
 // all messages cross over spdy now
 server.pipe(graft);
 
-// handle received messages
-graft.pipe(through2.obj(handleMsg));
-
 // run a local process and pipe stdio across spdy
 function handleMsg(req, enc, callback) {
   var opts = { stdio: [ 'pipe', 'pipe', 'pipe' ] };
@@ -33,3 +30,6 @@ function handleMsg(req, enc, callback) {
 
   callback();
 }
+
+// handle received messages
+graft.pipe(through2.obj(handleMsg));
