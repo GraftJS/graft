@@ -1,6 +1,6 @@
 {
   "name": "graft",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Full-Stack JavaScript Through Microservices",
   "main": "graft.js",
   "directories": {
@@ -24,7 +24,11 @@
     "jschan",
     "libchan"
   ],
-  "author": "Adrian Rossouw <adrian@daemon.co.za>",
+  "contributors": [
+    "Adrian Rossouw <adrian@daemon.co.za> (http://daemon.co.za)",
+    "Matteo Collina <hello@matteocollina.com> (http://matteocollina.com)",
+    "Peter Elger <elger.peter@gmail.com> (http://peterelger.com/)"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/GraftJS/graft/issues"
