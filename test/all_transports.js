@@ -38,6 +38,23 @@ module.exports = function allTransportTests(buildServer, buildClient) {
     client.write({ hello: 'world' });
   });
 
+  it('should receive 50 messages', function(done) {
+    var count = 0;
+    var i;
+    var max = 50;
+    instance.pipe(through.obj(function(req, enc, cb) {
+      count++;
+      cb();
+      if (count === max) {
+        done();
+      }
+    }));
+
+    for (i = 0; i < max; i++) {
+      client.write({ hello: 'world' });
+    }
+  });
+
   it('should pass the same session', function(done) {
     var session;
 
