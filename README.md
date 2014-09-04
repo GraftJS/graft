@@ -2,16 +2,26 @@ __Warning: This library is under active development, and should not be considere
 
 ![Graft](https://rawgit.com/GraftJS/graft.io/master/static/images/graft_logo.svg)
 
-The [Graft project](http://graft.io) explores what the web could become, if we extended microservice architectures into the client.  
+The [Graft project](http://graft.io) explores what the web could become, if we extended microservice architectures into the client.
 
-When you graft something, it involves joining together parts to create a new whole.  
+
+  * <a href="#motivation">Motivation</a>
+  * <a href="#api">API</a>
+  * <a href="#libchan">About LibChan</a>
+  * <a href="#contributors">Contributors</a>
+  * <a href="#license">License</a>
+
+Motivation
+----------
+
+When you graft something, it involves joining together parts to create a new whole.
 One that is hopefully more adaptable, resilient and ultimately interesting.
 
-> "Instead of pretending everything is a local function even over the network ..., what if we did it the other way around?  
-> Pretend your components are communicating over a network even when they aren't?"  
+> "Instead of pretending everything is a local function even over the network ..., what if we did it the other way around?
+> Pretend your components are communicating over a network even when they aren't?"
 >   -- Docker's [Solomon Hykes](http://github.com/shykes) on [LibChan](http://github.com/docker/libchan) - [[link]](https://news.ycombinator.com/item?id=7874317)
 
-### [Explore our concepts and influences](http://wayfinder.co/pathways/5365c71219e552110093ba31/graft-full-stack-node-js-through-microservices)  
+### [Explore our concepts and influences](http://wayfinder.co/pathways/5365c71219e552110093ba31/graft-full-stack-node-js-through-microservices)
 
 ---
 
@@ -48,20 +58,185 @@ One that is hopefully more adaptable, resilient and ultimately interesting.
 
 ---
 
-#### About LibChan
+<a name="api"></a>
+API
+---
+
+  * <a href="#graft"><code><b>graft()<b></code></a>
+  * <a href="#request">Request Interface</a>
+  * <a href="#spdyclient"><code>spdy.<b>client()</b></code></a>
+  * <a href="#spdyserver"><code>spdy.<b>server()</b></code></a>
+  * <a href="#wsclient"><code>ws.<b>client()</b></code></a>
+  * <a href="#wsserver"><code>ws.<b>server()</b></code></a>
+
+-------------------------------------------------------
+
+<a name="graft"></a>
+### graft()
+
+The main object of this library. A `Graft` instance is a
+[`Transform`](http://nodejs.org/api/stream.html#stream_class_stream_transform)
+stream with `objectMode: true`.
+The objects on the _output_ of a `Graft` instance are
+[Request](#request)s. On the input side, you can write just _normal JS
+objects_, and everything else you can [write to a jsChan
+channel](https://github.com/GraftJS/jschan#what-can-we-write-as-a-message).
+These objects will be automatically wrapped up in a [Request](#request).
+
+Internally, each `Graft` instance is backed by
+[jschan.memorySession()`](https://github.com/GraftJS/jschan#memorySession).
+
+In order to process the requests, you can just:
+
+```js
+var graft = require('graft')();
+var through = require('through2');
+
+graft.pipe(through.obj(function(req, enc, cb) {
+  console.log(req.msg); // prints { hello: 'world' }
+  // process your request
+  cb();
+}));
+
+graft.write({ hello: 'world' });
+
+```
+
+<a name="graft.ReadChannel"></a>
+#### graft.ReadChannel()
+
+Returns a nested read channel, this channel will wait for data from the
+other party.
+
+<a name="graft.WriteChannel"></a>
+#### graft.WriteChannel()
+
+Returns a nested write channel, this channel will buffer data up until
+is received by the other party.
+
+-------------------------------------------------------
+
+<a name="request"></a>
+### Request Interface
+
+Each __Graft__ request is composed of:
+
+* __`msg`__, the _first message sent on a top-level channel_.
+* __`channel`__, the associated channel.
+* __`session`__, the associated session.
+
+Each request will have its own channel, but the session is generic for
+every client.
+
+-------------------------------------------------------
+
+<a name="spdyclient"></a>
+### spdy.client()
+
+Creates a new spdy client to pipe to:
+
+```js
+var graft = require('graft')();
+var spdy = require('graft/spdy');
+
+graft.pipe(spdy.client({ port: 12345 }));
+
+graft.write({ hello: 'world' });
+```
+
+-------------------------------------------------------
+
+<a name="spdyserver"></a>
+### spdy.server()
+
+Creates a new spdy server that you can pipe to a graft instance:
+
+```js
+var graft = require('graft')();
+var spdy = require('graft/spdy');
+var through = require('through2');
+
+spdy
+  .server({ port: 12345 })
+  .pipe(graft)
+  .pipe(through.obj(function(req, enc, cb) {
+    console.log(req.msg); // prints { hello: 'world' }
+    // process your request
+    cb();
+  }));
+```
+
+-------------------------------------------------------
+
+<a name="wsclient"></a>
+### ws.client()
+
+Creates a new ws client to pipe to:
+
+```js
+var graft = require('graft')();
+var ws = require('graft/ws');
+
+graft.pipe(ws.client({ port: 12345 }));
+
+graft.write({ hello: 'world' });
+```
+
+It works even from a Browser, using
+[WebPack](http://npm.im/webpack) or [Browserify](http://npm.im/browserify).
+
+-------------------------------------------------------
+
+<a name="wsserver"></a>
+### ws.server()
+
+Creates a new ws server that you can pipe to a graft instance:
+
+```js
+var graft = require('graft')();
+var ws = require('graft/ws');
+var through = require('through2');
+
+ws
+  .server({ port: 12345 })
+  .pipe(graft)
+  .pipe(through.obj(function(req, enc, cb) {
+    console.log(req.msg); // prints { hello: 'world' }
+    // process your request
+    cb();
+  }));
+```
+
+You can even pass an existing http server that will be hooked up, like
+so:
+
+```js
+var graft   = require('graft');
+var ws      = require('graft/ws');
+var http    = require('http');
+var server  = http.createServer();
+
+ws
+  .server({ server: server })
+  .pipe(graft())
+```
+
+<a name="libchan"></a>
+About LibChan
+-------------
 
 Libchan is the connective tissue to all our endeavours. It is a microservices library announced by the Docker project,
 and it is going to form the basis of all of the tools they build in the future.
 
-It's most unique characteristic is that it replicates the semantics of go channels across network connections, while allowing for nested channels to be transferred in messages. This would let you to do things like attach a reference to a remote file on an HTTP response, that could be opened on the remote end for reading or writing.  
+It's most unique characteristic is that it replicates the semantics of go channels across network connections, while allowing for nested channels to be transferred in messages. This would let you to do things like attach a reference to a remote file on an HTTP response, that could be opened on the remote end for reading or writing.
 
-The protocol uses SPDY as it's default transport with MSGPACK as it's default serialization format. Both are able to be switched out, with http1+websockets and protobuf fallbacks planned.  
+The protocol uses SPDY as it's default transport with MSGPACK as it's default serialization format. Both are able to be switched out, with http1+websockets and protobuf fallbacks planned.
 
-While the RequestResponse pattern is the primary focus, Asynchronous Message Passing is still possible, due to the low level nature of the protocol.  
+While the RequestResponse pattern is the primary focus, Asynchronous Message Passing is still possible, due to the low level nature of the protocol.
 
----
-
-#### Contributors
+<a name="contributors"></a>
+Contributors
+------------
 
 [Adrian Rossouw](http://github.com/Vertice)
 
@@ -82,3 +257,9 @@ While the RequestResponse pattern is the primary focus, Asynchronous Message Pas
 * Founder of [Mosca](https://github.com/mcollina/mosca) project.
 * Founder of [Levelgraph](https://github.com/mcollina/levelgraph) project.
 * Founder of [Ponte](https://github.com/eclipse/ponte) project.
+
+<a name="license"></a>
+License
+-------
+
+MIT
