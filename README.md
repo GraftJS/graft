@@ -63,6 +63,10 @@ API
 ---
 
   * <a href="#graft"><code><b>graft()<b></code></a>
+  * <a href="#graft.ReadChannel"><code>graft.<b>ReadChannel()</b></code></a>
+  * <a href="#graft.WriteChanel"><code>graft.<b>WriteChanel()</b></code></a>
+  * <a href="#graft.branch"><code>graft.<b>branch()</b></code></a>
+  * <a href="#graft.where"><code>graft.<b>where()</b></code></a>
   * <a href="#request">Request Interface</a>
   * <a href="#spdyclient"><code>spdy.<b>client()</b></code></a>
   * <a href="#spdyserver"><code>spdy.<b>server()</b></code></a>
@@ -113,6 +117,31 @@ other party.
 
 Returns a nested write channel, this channel will buffer data up until
 is received by the other party.
+
+<a name="graft.branch"></a>
+#### graft.branch(function(req), stream)
+
+Passes the request to the first argument, and if that returns a _truthy_
+value, it calls `write(req)` on the associated stream.
+It respect backpressure.
+
+<a name="graft.where"></a>
+#### graft.where(obj, stream)
+
+Shortcut for the most common usage of `graft.branch()`, it allows to
+rewrite:
+
+```js
+graft.branch(function(req) {
+  return req.msg.hello === 'world'
+}, stream)
+```
+
+into:
+
+```js
+graft.where({ hello: 'world' }, stream)
+```
 
 -------------------------------------------------------
 

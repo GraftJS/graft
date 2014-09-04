@@ -114,11 +114,11 @@ Graft.prototype.close = function(cb) {
   this.end();
 };
 
-Graft.prototype.ReadChannel   = function() {
+Graft.prototype.ReadChannel = function() {
   return this._nextChannel.ReadChannel();
 };
 
-Graft.prototype.WriteChannel   = function() {
+Graft.prototype.WriteChannel = function() {
   return this._nextChannel.WriteChannel();
 };
 
