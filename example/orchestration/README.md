@@ -2,12 +2,12 @@ Orchestration Example
 =====================
 
 In order to use this example, you need to use
-[Browserify](http://npm.im/browserify):
+[Webpack](http://npm.im/webpack):
 
 ```bash
 cd examples/orchestration
-npm install browserify -g
-browserify client.js > bundle.js
+npm install webpack -g
+webpack
 node adder
 node server
 ```
