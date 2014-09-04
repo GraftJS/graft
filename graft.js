@@ -55,7 +55,7 @@ Graft.prototype._transform = function flowing(obj, enc, done) {
   var i;
 
   for (i = 0; i < this._patterns.length; i++) {
-    if (deepMatch(this._patterns[i].pattern, obj.msg)) {
+    if (this._patterns[i].pattern(obj)) {
       this._patterns[i].stream.write(obj, done);
       return;
     }
@@ -66,7 +66,7 @@ Graft.prototype._transform = function flowing(obj, enc, done) {
   done();
 };
 
-Graft.prototype.where = function(pattern, stream) {
+Graft.prototype.branch = function(pattern, stream) {
   if (!pattern) {
     throw new Error('missing pattern');
   }
@@ -81,6 +81,12 @@ Graft.prototype.where = function(pattern, stream) {
   });
 
   return this;
+};
+
+Graft.prototype.where = function(pattern, stream) {
+  return this.branch(function(req) {
+    return deepMatch(pattern, req.msg);
+  }, stream);
 };
 
 Graft.prototype.close = function(cb) {
