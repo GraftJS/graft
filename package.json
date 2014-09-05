@@ -1,6 +1,6 @@
 {
   "name": "graft",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Full-Stack JavaScript Through Microservices",
   "main": "graft.js",
   "directories": {
@@ -36,7 +36,7 @@
   "homepage": "https://github.com/GraftJS/graft",
   "dependencies": {
     "inherits": "^2.0.1",
-    "jschan": "^0.1.3",
+    "jschan": "^0.1.4",
     "readable-stream": "^1.0.31"
   },
   "devDependencies": {
