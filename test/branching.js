@@ -15,15 +15,16 @@ describe('.branch', function() {
 
   it('must route matching messages to the second instance', function(done) {
     first
-      .branch(function(req) {
-        return req.msg.hello === 'world';
+      .branch(function(msg) {
+        return msg.hello === 'world';
       }, second)
       .on('data', function() {
         done(new Error('not expected'));
       });
 
-    second.on('data', function(req) {
-      expect(req.msg).to.eql({ hello: 'world', name: 'matteo' });
+    second.on('data', function(msg) {
+      expect(msg.hello).to.eql('world');
+      expect(msg.name).to.eql('matteo');
       done();
     });
 
@@ -32,11 +33,11 @@ describe('.branch', function() {
 
   it('must keep not matching messages on the pipeline', function(done) {
     first
-      .branch(function(req) {
-        return req.msg.hello === 'world';
+      .branch(function(msg) {
+        return msg.hello === 'world';
       }, second)
-      .on('data', function(req) {
-        expect(req.msg).to.eql({ hello: 'matteo' });
+      .on('data', function(msg) {
+        expect(msg.hello).to.equal('matteo');
         done();
       });
 
@@ -45,8 +46,8 @@ describe('.branch', function() {
 
   it('must stay the same instance', function() {
     var b = first
-              .branch(function(req) {
-                return req.msg.hello === 'world';
+              .branch(function(msg) {
+                return msg.hello === 'world';
               }, second);
 
     expect(b).to.be(first);
@@ -61,8 +62,9 @@ describe('.branch', function() {
           done(new Error('not expected'));
         });
 
-      second.on('data', function(req) {
-        expect(req.msg).to.eql({ hello: 'world', name: 'matteo' });
+      second.on('data', function(msg) {
+        expect(msg.hello).to.eql('world');
+        expect(msg.name).to.eql('matteo');
         done();
       });
 
@@ -72,8 +74,8 @@ describe('.branch', function() {
     it('must keep not matching messages on the pipeline', function(done) {
       first
         .where({ hello: 'world' }, second)
-        .on('data', function(req) {
-          expect(req.msg).to.eql({ hello: 'matteo' });
+        .on('data', function(msg) {
+          expect(msg.hello).to.eql('matteo');
           done();
         });
 
