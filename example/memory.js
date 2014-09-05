@@ -5,17 +5,16 @@ var assert  = require('assert');
 var through = require('through2');
 var called  = false;
 
-graft.pipe(through.obj(function(req, enc, cb) {
-  if (req.msg.topic === 'foo') {
-    graft.write({ topic: 'bar' });
+graft.pipe(through.obj(function(msg, enc, cb) {
+  if (msg.topic === 'foo') {
+    graft.write({ topic: 'bar' }, cb);
   }
-  cb();
 }));
 
-graft.pipe(through.obj(function(req, enc, cb) {
-  if (req.msg.topic === 'bar') {
+graft.pipe(through.obj(function(msg, enc, cb) {
+  if (msg.topic === 'bar') {
     called = true;
-    assert('response', req.msg);
+    assert('response', msg);
   }
   cb();
 }));
