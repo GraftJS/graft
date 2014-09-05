@@ -17,7 +17,7 @@ var graft = require('../../')();
 graft.pipe(require('../../spdy').client({ port: 9323 }));
 
 // create a return channel
-var ret = graft.createReadChannel();
+var ret = graft.ReadChannel();
 
 // send the comamnd through Graft
 graft.write({
