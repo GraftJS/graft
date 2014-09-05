@@ -25,7 +25,10 @@ describe('websocket client', function() {
   beforeEach(function(done) {
     server = ws.server();
     server.on('ready', function(server) {
-      client = ws.client({ port: server.address().port });
+      client = ws.client({
+        port: server.address().port,
+        reconnectTimeout: 100
+      });
       done();
     });
   });
@@ -49,6 +52,18 @@ describe('websocket client', function() {
       client.session.close();
       client.once('ready', function() {
         done();
+      });
+    });
+  });
+
+  it('must reconnect twice', function(done) {
+    client.once('ready', function() {
+      client.session.close();
+      client.once('ready', function() {
+        client.session.close();
+        client.once('ready', function() {
+          done();
+        });
       });
     });
   });
