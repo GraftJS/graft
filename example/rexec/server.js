@@ -13,10 +13,8 @@ var server = spdy.server({ port: 9323 });
 server.pipe(graft);
 
 // run a local process and pipe stdio across spdy
-function handleMsg(req, enc, callback) {
+function handleMsg(msg, enc, callback) {
   var opts = { stdio: [ 'pipe', 'pipe', 'pipe' ] };
-
-  var msg = req.msg;
 
   var child = spawn(msg.Cmd, msg.Args, opts);
 

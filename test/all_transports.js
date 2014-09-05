@@ -27,10 +27,10 @@ module.exports = function allTransportTests(buildServer, buildClient) {
   });
 
   it('should receive a message', function(done) {
-    instance.pipe(through.obj(function(req, enc, cb) {
-      expect(req.msg).to.eql({ hello: 'world' });
-      expect(req.session).to.exist();
-      expect(req.channel).to.exist();
+    instance.pipe(through.obj(function(msg, enc, cb) {
+      expect(msg.hello).to.eql('world');
+      expect(msg._session).to.exist();
+      expect(msg._channel).to.exist();
       cb();
       done();
     }));
@@ -60,9 +60,9 @@ module.exports = function allTransportTests(buildServer, buildClient) {
 
     instance.pipe(through.obj(function(req, enc, cb) {
       if (!session) {
-        session = req.session;
+        session = req._session;
       } else {
-        expect(req.session).to.be(session);
+        expect(req._session).to.be(session);
         done();
       }
       cb();
@@ -75,10 +75,10 @@ module.exports = function allTransportTests(buildServer, buildClient) {
   it('should support a return channel', function(done) {
     var returnChannel = client.ReadChannel();
 
-    instance.pipe(through.obj(function(req, enc, cb) {
-      var chan = req.msg.returnChannel;
-      delete req.msg.returnChannel;
-      chan.end(req.msg, cb);
+    instance.pipe(through.obj(function(msg, enc, cb) {
+      var chan = msg.returnChannel;
+      delete msg.returnChannel;
+      chan.end(msg, cb);
     }));
 
     client.write({
@@ -87,7 +87,7 @@ module.exports = function allTransportTests(buildServer, buildClient) {
     });
 
     returnChannel.pipe(through.obj(function(msg, enc, cb) {
-      expect(msg).to.eql({ hello: 'world' });
+      expect(msg.hello).to.eql('world');
       cb();
       done();
     }));
@@ -96,10 +96,10 @@ module.exports = function allTransportTests(buildServer, buildClient) {
   it('should support a second write channel', function(done) {
     var moreChannel = client.WriteChannel();
 
-    instance.pipe(through.obj(function(req, enc, cb) {
-      var chan = req.msg.moreChannel;
+    instance.pipe(through.obj(function(msg, enc, cb) {
+      var chan = msg.moreChannel;
       chan.pipe(through.obj(function(msg, enc, cb) {
-        expect(msg).to.eql({ more: 'message' });
+        expect(msg.more).to.eql('message');
         cb();
         done();
       }));
@@ -120,19 +120,19 @@ module.exports = function allTransportTests(buildServer, buildClient) {
     var channel;
 
     instance2
-      .pipe(through.obj(function(req, enc, cb) {
-        expect(req.msg).to.eql({ hello: 'world' });
-        expect(req.session).to.be(session);
-        expect(req.channel).to.be(channel);
+      .pipe(through.obj(function(msg, enc, cb) {
+        expect(msg.hello).to.eql('world');
+        expect(msg._session).to.be(session);
+        expect(msg._channel).to.be(channel);
         done();
         cb();
       }));
 
     instance
-      .pipe(through.obj(function(req, enc, cb) {
-        session = req.session;
-        channel = req.channel;
-        this.push(req);
+      .pipe(through.obj(function(msg, enc, cb) {
+        session = msg._session;
+        channel = msg._channel;
+        this.push(msg);
         cb();
       }))
       .pipe(instance2);
@@ -151,8 +151,8 @@ module.exports = function allTransportTests(buildServer, buildClient) {
 
     client.write({ readable: readable });
 
-    instance.pipe(through.obj(function(req, enc, cb) {
-      req.msg.readable.pipe(through(function(chunk, enc, cb) {
+    instance.pipe(through.obj(function(msg, enc, cb) {
+      msg.readable.pipe(through(function(chunk, enc, cb) {
         expect(chunk.toString()).to.eql('hello world');
         done();
         cb();

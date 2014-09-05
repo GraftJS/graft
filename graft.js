@@ -3,8 +3,8 @@
 
 var Transform = require('readable-stream').Transform;
 var inherits  = require('inherits');
-var Request   = require('./lib/request');
 var deepMatch = require('./lib/deepMatch');
+var wrap      = require('./lib/wrapMessage');
 var jschan    = require('jschan');
 
 function noop() {}
@@ -20,7 +20,7 @@ function Graft() {
   function readFirst() {
     /*jshint validthis:true */
     this.removeListener('readable', readFirst);
-    that._transform(new Request(that._session, this, this.read()), null, noop);
+    that._transform(wrap(this.read(), this), null, noop);
   }
 
   this._session = jschan.memorySession();
@@ -44,7 +44,7 @@ function Graft() {
 inherits(Graft, Transform);
 
 Graft.prototype._transform = function flowing(obj, enc, done) {
-  if (!obj.session && !obj.channel)  {
+  if (!obj._session && !obj._channel)  {
     // it quacks like a duck, so it's a duck - s/duck/request/g
     var channel = this._nextChannel;
     this._nextChannel = this._session.WriteChannel();
@@ -85,7 +85,7 @@ Graft.prototype.branch = function(pattern, stream) {
 
 Graft.prototype.where = function(pattern, stream) {
   return this.branch(function(req) {
-    return deepMatch(pattern, req.msg);
+    return deepMatch(pattern, req);
   }, stream);
 };
 

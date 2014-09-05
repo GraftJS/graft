@@ -96,8 +96,8 @@ In order to process the requests, you can just:
 var graft = require('graft')();
 var through = require('through2');
 
-graft.pipe(through.obj(function(req, enc, cb) {
-  console.log(req.msg); // prints { hello: 'world' }
+graft.pipe(through.obj(function(msg, enc, cb) {
+  console.log(msg); // prints { hello: 'world' }
   // process your request
   cb();
 }));
@@ -132,8 +132,8 @@ Shortcut for the most common usage of `graft.branch()`, it allows to
 rewrite:
 
 ```js
-graft.branch(function(req) {
-  return req.msg.hello === 'world'
+graft.branch(function(msg) {
+  return msg.hello === 'world'
 }, stream)
 ```
 
@@ -148,14 +148,16 @@ graft.where({ hello: 'world' }, stream)
 <a name="request"></a>
 ### Request Interface
 
-Each __Graft__ request is composed of:
+Each __Graft__ request is the _first message sent on a top-level channel_, and it is composed of:
 
-* __`msg`__, the _first message sent on a top-level channel_.
-* __`channel`__, the associated channel.
-* __`session`__, the associated session.
+* all the properties of the message
+* __`_channel`__, the associated channel
+* __`_session`__, the associated session
 
 Each request will have its own channel, but the session is generic for
 every client.
+
+The `_channel` and `_session` properties will not be enumerable.
 
 -------------------------------------------------------
 
@@ -188,8 +190,8 @@ var through = require('through2');
 spdy
   .server({ port: 12345 })
   .pipe(graft)
-  .pipe(through.obj(function(req, enc, cb) {
-    console.log(req.msg); // prints { hello: 'world' }
+  .pipe(through.obj(function(msg, enc, cb) {
+    console.log(msg); // prints { hello: 'world' }
     // process your request
     cb();
   }));
@@ -229,8 +231,8 @@ var through = require('through2');
 ws
   .server({ port: 12345 })
   .pipe(graft)
-  .pipe(through.obj(function(req, enc, cb) {
-    console.log(req.msg); // prints { hello: 'world' }
+  .pipe(through.obj(function(msg, enc, cb) {
+    console.log(msg); // prints { hello: 'world' }
     // process your request
     cb();
   }));
