@@ -40,7 +40,9 @@ function SPDYClient(opts) {
 inherits(SPDYClient, Client);
 
 SPDYClient.prototype._buildSession = function(opts) {
-  return jschan.spdyClientSession(opts);
+  var client = jschan.spdyClientSession(opts);
+  client.agent._spdyState.socket.on('secureConnect', this.emit.bind(this, 'ready', this));
+  return client;
 };
 
 module.exports.client = SPDYClient;

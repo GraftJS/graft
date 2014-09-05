@@ -43,7 +43,9 @@ function WSClient(opts) {
 inherits(WSClient, Client);
 
 WSClient.prototype._buildSession = function(opts) {
-  return jschan.websocketClientSession(opts);
+  var client = jschan.websocketClientSession(opts);
+  client._inStream.on('connect', this.emit.bind(this, 'ready', this));
+  return client;
 };
 
 module.exports.client = WSClient;

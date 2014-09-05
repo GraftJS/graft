@@ -22,3 +22,43 @@ describe('spdy graft', function() {
     return result;
   });
 });
+
+describe('spdy client', function() {
+  var server;
+  var client;
+
+  beforeEach(function(done) {
+    server = spdy.server();
+    server.on('ready', function(server) {
+      client = spdy.client({ port: server.address().port });
+      done();
+    });
+  });
+
+  afterEach(function(done) {
+    client.close(function() {
+      done();
+    });
+  });
+
+  afterEach(function(done) {
+    server.close(function() {
+      done();
+    });
+  });
+
+  it('must emit ready when connected', function(done) {
+    client.on('ready', function() {
+      done();
+    });
+  });
+
+  it('must automatically reconnect', function(done) {
+    client.once('ready', function() {
+      client.session.close();
+      client.once('ready', function() {
+        done();
+      });
+    });
+  });
+});
