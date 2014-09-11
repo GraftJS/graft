@@ -11,6 +11,8 @@ The [Graft project](http://graft.io) explores what the web could become, if we e
   * <a href="#contributors">Contributors</a>
   * <a href="#license">License</a>
 
+__Interested in Graft and jsChan?__ Watch @mcollina presentation at [NodeConf.eu 2014](http://nodeconf.eu/)
+
 Motivation
 ----------
 
