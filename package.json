@@ -40,6 +40,7 @@
     "readable-stream": "^1.0.31"
   },
   "devDependencies": {
+    "after": "^0.8.1",
     "jshint": "^2.5.5",
     "mocha": "^1.21.4",
     "must": "^0.12.0",
