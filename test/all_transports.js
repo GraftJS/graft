@@ -149,10 +149,10 @@ module.exports = function allTransportTests(buildServer, buildClient) {
       this.push(null);
     };
 
-    client.write({ readable: readable });
+    client.write({ bin: readable });
 
     instance.pipe(through.obj(function(msg, enc, cb) {
-      msg.readable.pipe(through(function(chunk, enc, cb) {
+      msg.bin.pipe(through(function(chunk, enc, cb) {
         expect(chunk.toString()).to.eql('hello world');
         done();
         cb();
