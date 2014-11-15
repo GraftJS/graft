@@ -4,12 +4,13 @@ __Warning: This library is under active development, and should not be considere
 
 The [Graft project](http://graft.io) explores what the web could become, if we extended microservice architectures into the client.
 
-
   * <a href="#motivation">Motivation</a>
   * <a href="#api">API</a>
   * <a href="#libchan">About LibChan</a>
   * <a href="#contributors">Contributors</a>
   * <a href="#license">License</a>
+
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/GraftJS/graft?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 __Interested in Graft and jsChan?__ Watch @mcollina presentation at [NodeConf.eu 2014](http://nodeconf.eu/), ["Full Stack Through Microservices"](https://github.com/mcollina/nodeconfeu-2014-full-stack-through-microservices)
 
