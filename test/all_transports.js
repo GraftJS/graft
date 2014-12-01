@@ -93,6 +93,46 @@ module.exports = function allTransportTests(buildServer, buildClient) {
     }));
   });
 
+  it('should support unpiping a piped instance', function(done) {
+    var instance2 = graft();
+
+    var dest = through.obj(function(msg, enc, cb) {
+      expect(msg.hello).to.eql('world');
+      client.end();
+      cb();
+    });
+
+    instance.pipe(instance2);
+    instance2.pipe(dest);
+    instance2.on('unpipe', function() { done(); });
+
+    client.write({ hello: 'world' });
+  });
+
+  it.skip('should support piping to a return channel', function(done) {
+    var returnChannel = client.ReadChannel();
+    var instance2 = graft();
+    var dest = through.obj(function(msg, enc, cb) {
+      instance2.pipe(msg.returnChannel);
+      cb();
+    });
+
+    instance.where({topic: 'subscribe'}, dest);
+
+    returnChannel.on('unpipe', function() { done(); });
+
+    client.write({
+      hello: 'world',
+      returnChannel: returnChannel
+    });
+
+    returnChannel.pipe(through.obj(function(msg, enc, cb) {
+      expect(msg.hello).to.eql('world');
+      client.end();
+      cb();
+    }));
+  });
+
   it('should support a second write channel', function(done) {
     var moreChannel = client.WriteChannel();
 
