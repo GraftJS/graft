@@ -62,6 +62,7 @@ One that is hopefully more adaptable, resilient and ultimately interesting.
 ---
 
 <a name="api"></a>
+
 API
 ---
 
@@ -272,25 +273,10 @@ While the RequestResponse pattern is the primary focus, Asynchronous Message Pas
 Contributors
 ------------
 
-[Adrian Rossouw](http://github.com/Vertice)
+* [Adrian Rossouw](http://github.com/Vertice) - Co-Founder
+* [Peter Elgers](https://github.com/pelger) - Co-Founder
+* [Matteo Collina](https://github.com/mcollina) - Co-Founder
 
-* CTO of [Wayfinder](http://wayfinder.co)
-* Co-Founder of [Graft](http://graft.io) project.
-* Founder of [Aegir](http://communityproject.org) project.
-* Founder of [Waif](http://github.com/wayfin/waif) project.
-* [Former Drupal Core Developer](https://drupal.org/node/956624)
-
-[Peter Elgers](https://github.com/pelger)
-
-* VP of Engineering at [Nearform](http://nearform.com).
-* Co-Founder of [Graft](http://graft.io) project.
-
-[Matteo Collina](https://github.com/mcollina)
-
-* Co-Founder of [Graft](http://graft.io)
-* Founder of [Mosca](https://github.com/mcollina/mosca) project.
-* Founder of [Levelgraph](https://github.com/mcollina/levelgraph) project.
-* Founder of [Ponte](https://github.com/eclipse/ponte) project.
 
 <a name="license"></a>
 License
