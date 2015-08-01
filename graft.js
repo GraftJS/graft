@@ -1,11 +1,12 @@
-
 'use strict';
 
 var Transform = require('readable-stream').Transform;
 var inherits  = require('inherits');
-var deepMatch = require('./lib/deepMatch');
+var initPattern = require('./lib/pattern');
 var wrap      = require('./lib/wrapMessage');
 var jschan    = require('jschan');
+var patrun    = require('patrun');
+
 
 function noop() {}
 
@@ -39,6 +40,7 @@ function Graft() {
   });
 
   this._patterns = [];
+  this.__patrun = patrun();
 }
 
 inherits(Graft, Transform);
@@ -84,9 +86,18 @@ Graft.prototype.branch = function(pattern, stream) {
 };
 
 Graft.prototype.where = function(pattern, stream) {
-  return this.branch(function(req) {
-    return deepMatch(pattern, req);
-  }, stream);
+  var self = this;
+  var spec = initPattern.apply(self, arguments);
+  var prior = self.__patrun.find(spec, true);
+
+  var result = !prior ? stream : prior.pipe(stream);
+
+  self.__patrun.add(spec, result);
+
+  return this.branch(function() {
+    var spec = initPattern.apply(self, arguments);
+    return !!self.__patrun.find(spec);
+  }, result);
 };
 
 Graft.prototype.close = function(cb) {
@@ -121,5 +132,7 @@ Graft.prototype.ReadChannel = function() {
 Graft.prototype.WriteChannel = function() {
   return this._nextChannel.WriteChannel();
 };
+
+
 
 module.exports = Graft;

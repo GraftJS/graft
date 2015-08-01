@@ -36,7 +36,10 @@
   "homepage": "https://github.com/GraftJS/graft",
   "dependencies": {
     "inherits": "^2.0.1",
+    "is-plain-object": "^2.0.1",
+    "is-string": "^1.0.4",
     "jschan": "^0.2.1",
+    "object-extend": "^0.5.0",
     "readable-stream": "^1.0.31"
   },
   "devDependencies": {
