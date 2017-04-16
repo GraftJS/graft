@@ -16,6 +16,7 @@ __Interested in Graft and jsChan?__ Watch @mcollina presentation at [NodeConf.eu
 
 Motivation
 ----------
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/GraftJS/graft?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 When you graft something, it involves joining together parts to create a new whole.
 One that is hopefully more adaptable, resilient and ultimately interesting.
