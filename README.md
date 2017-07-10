@@ -1,4 +1,4 @@
-__Warning: This library is under active development, and should not be considered production ready__
+__Warning: This library is incomplete and unmaintained. Check out [UpringJS](https://github.com/upringjs/upring) by one of the original founders if you want something similar.__
 
 ![Graft](https://rawgit.com/GraftJS/graft.io/master/static/images/graft_logo.svg)
 
