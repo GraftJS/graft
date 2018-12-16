@@ -1,6 +1,6 @@
 __Warning: This library is incomplete and unmaintained. Check out [UpringJS](https://github.com/upringjs/upring) by one of the original founders if you want something similar.__
 
-![Graft](https://rawgit.com/GraftJS/graft.io/master/static/images/graft_logo.svg)
+![Graft](https://combinatronics.com/GraftJS/graft.io/master/static/images/graft_logo.svg)
 
 The [Graft project](http://graft.io) explores what the web could become, if we extended microservice architectures into the client.
 
